@@ -5,10 +5,12 @@ const _ = require("lodash");
 const url = "https://animekisa.tv/dr-stone";
 
 function extractEpisodes(html) {
+  const episodes = [];
   const $ = cheerio.load(html);
-  return $("div.infoept2 div.centerv").map((i, elem) => {
-    return $(elem).text();
+  $("div.infoept2 div.centerv").each((i, elem) => {
+    episodes.push($(elem).text());
   });
+  return episodes;
 }
 
 function formatEpisodes(episodes) {
@@ -22,8 +24,8 @@ function getEpisodes() {
     .get(url)
     .then(response => {
       const extractedEpisodes = extractEpisodes(response.data);
-      console.log(extractedEpisodes);
-      const formattedEpisodes = formatEpisodes(test);
+      const formattedEpisodes = formatEpisodes(extractedEpisodes);
+      console.log(formattedEpisodes);
     })
     .catch(error => {
       console.log(error);
@@ -40,3 +42,6 @@ start();
 //   0: {},
 //   1: {}
 // };
+
+// return $("div.infoept2 div.centerv").map((i, elem) => {
+//   return console.log($(elem).text());
