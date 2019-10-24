@@ -23,9 +23,16 @@ function getEpisodes() {
   axios
     .get(url)
     .then(response => {
+      let state = [];
       const extractedEpisodes = extractEpisodes(response.data);
       const formattedEpisodes = formatEpisodes(extractedEpisodes);
-      console.log(formattedEpisodes);
+      if (state.length !== formattedEpisodes.length) {
+        state = state.concat(formattedEpisodes);
+        console.log(state);
+      } else {
+        return;
+      }
+      if (state.length)
     })
     .catch(error => {
       console.log(error);
