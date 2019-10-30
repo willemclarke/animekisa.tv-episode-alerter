@@ -1,6 +1,7 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 const _ = require("lodash");
+const nodemailer = require("nodemailer");
 
 const url = "https://animekisa.tv/dr-stone";
 
@@ -13,6 +14,7 @@ function extractEpisodes(html) {
   return episodes;
 }
 
+// takes in an array of episodes --> transforms each element to an int
 function formatEpisodes(episodes) {
   return episodes.reverse().map(episode => {
     return parseInt(episode, 10);
@@ -23,16 +25,9 @@ function getEpisodes() {
   axios
     .get(url)
     .then(response => {
-      let state = [];
       const extractedEpisodes = extractEpisodes(response.data);
       const formattedEpisodes = formatEpisodes(extractedEpisodes);
-      if (state.length !== formattedEpisodes.length) {
-        state = state.concat(formattedEpisodes);
-        console.log(state);
-      } else {
-        return;
-      }
-      if (state.length)
+      console.log(formattedEpisodes);
     })
     .catch(error => {
       console.log(error);
@@ -50,5 +45,9 @@ start();
 //   1: {}
 // };
 
-// return $("div.infoept2 div.centerv").map((i, elem) => {
-//   return console.log($(elem).text());
+// if (state.length !== formattedEpisodes.length) {
+//   state = state.concat(formattedEpisodes);
+//   console.log(state);
+// } else {
+//   return;
+// }
