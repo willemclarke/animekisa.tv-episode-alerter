@@ -35,7 +35,7 @@ function getEpisodes(url) {
       return formatEpisodes(extractedEpisodes);
     })
     .catch(error => {
-      console.log(error);
+      console.log((error.response && error.response.data) || error.request || error.message);
     });
 }
 
@@ -55,7 +55,7 @@ function syncEpisodes(name, filePath, url) {
 
 function syncAnimes(animes) {
   animes.forEach(anime => {
-    const filePath = path.join(__dirname, `./assets/${anime.name}.json`);
+    const filePath = path.join(__dirname, `./database/${anime.name}.json`);
     syncEpisodes(anime.name, filePath, anime.url);
   });
 }
@@ -65,15 +65,3 @@ function start(animes) {
 }
 
 start(animes);
-
-// - first time program runs, the state ([]) will be empty
-// - then the program will extract the episodes & and push them into the state
-//   - at this point the program does nothing (keeps checking)
-// - once a new episode comes in, it compares the current array to the state (e.g.) .\_isEqual(formmattedEpisodes, state)
-//   - if it is not equal --> updates the state to have all episodes ---> then sends email
-//   - if it is equal --> do nothing, keep checking
-
-// visualise = {
-//   0: {},
-//   1: {}
-// };
