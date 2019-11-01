@@ -11,7 +11,8 @@ const email = new Email();
 const animes = [
   { name: "Dr Stone", url: "https://animekisa.tv/dr-stone" },
   { name: "Ahiru No Sora", url: "https://animekisa.tv/ahiru-no-sora" },
-  { name: "My Hero Academia", url: "https://animekisa.tv/boku-no-hero-academia-4" }
+  { name: "My Hero Academia", url: "https://animekisa.tv/boku-no-hero-academia-4" },
+  { name: "Food Wars Season 4", url: "https://animekisa.tv/shokugeki-no-souma-shin-no-sara" }
 ];
 
 // extracts the html data (episodes) and pushes them into an array

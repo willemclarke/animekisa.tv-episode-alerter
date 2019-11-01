@@ -11,7 +11,7 @@ class Email {
       },
       auth: {
         user: "placeholder@outlook.com",
-        pass: "placeholderpass@outlook.com"
+        pass: "placeholderpw"
       }
     });
 
