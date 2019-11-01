@@ -6,5 +6,5 @@
 ### if you would like to use:
 
 - clone the repository --> npm install
-- depending on which anime you want to add, navigate to the index.js folder and adjust the 'animes' object data --> make sure to use animekisa.tv site
+- depending on which anime you want to add, navigate to the index.js file and adjust the 'animes' object data --> make sure to use animekisa.tv anime page links
 - update the email-handling.js file to contain the emails you wish to use and send --> I sent to myself
