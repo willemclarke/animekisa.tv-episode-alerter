@@ -5,9 +5,12 @@ const fs = require("fs");
 const path = require("path");
 const nodemailer = require("nodemailer");
 
+// const sendEmail = require("./email-handling.js");
+
 const animes = [
   { name: "Dr Stone", url: "https://animekisa.tv/dr-stone" },
-  { name: "Ahri No Sora", url: "https://animekisa.tv/ahiru-no-sora" }
+  { name: "Ahiru No Sora", url: "https://animekisa.tv/ahiru-no-sora" },
+  { name: "My Hero Academia", url: "https://animekisa.tv/boku-no-hero-academia-4" }
 ];
 
 function extractEpisodes(html) {
@@ -44,11 +47,12 @@ function syncEpisodes(name, filePath, url) {
   const parsedDatabase = readDatabase ? JSON.parse(readDatabase) : readDatabase;
   getEpisodes(url).then(result => {
     if (_.isEqual(parsedDatabase, result)) {
-      return console.log("No new episodes, don't send email");
+      return console.log(`No new episodes for ${name}, don't send email`);
     } else {
       const missingEpisodes = _.differenceWith(result, parsedDatabase, _.isEqual);
+      const episodesForEmail = missingEpisodes.length;
       fs.writeFileSync(filePath, JSON.stringify(result));
-      return console.log(`${missingEpisodes.length} New Episodes Found for ${name} Sending Email`);
+      return console.log(`${episodesForEmail} New Episodes Found for ${name} Sending Email`);
     }
   });
 }
