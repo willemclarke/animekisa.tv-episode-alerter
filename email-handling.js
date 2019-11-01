@@ -1,30 +1,35 @@
 const nodemailer = require("nodemailer");
 
-async function sendEmail(episodesForEmail, name) {
-  let testAccount = await nodemailer.createTestAccount();
+class Email {
+  sendEmail(episodesForEmail, name) {
+    const transporter = nodemailer.createTransport({
+      host: "smtp-mail.outlook.com", // hostname
+      secureConnection: false, // TLS requires secureConnection to be false
+      port: 587, // port for secure SMTP
+      tls: {
+        ciphers: "SSLv3"
+      },
+      auth: {
+        user: "outlookemail@hotmail.com",
+        pass: "outlookmailpass@hotmail.com"
+      }
+    });
 
-  const transporter = nodemailer.createTransport("SMTP", {
-    host: "smtp-mail.outlook.com", // hostname
-    secureConnection: false, // TLS requires secureConnection to be false
-    port: 587, // port for secure SMTP
-    auth: {
-      user: "user,
-      pass: "pass"
-    },
-    tls: {
-      ciphers: "SSLv3"
-    }
-  });
+    const mailOptions = {
+      from: '"Anime Alerter " <placeholder@hotmail.com>', // sender address (who sends)
+      to: "placeholder@hotmail.com", // list of receivers (who receives)
+      subject: `${name} New Episode Alert!`, // Subject line
+      text: `${name} has ${episodesForEmail} new episodes released on platforms such as animekisa.tv and kissanime.ru` // plaintext body
+    };
 
-  let info = await transporter.sendMail({
-    from: '"Anime Alerter" <animekisa.tv@foo.com>', // sender address
-    to: "willem.2@hotmail.com", // list of receivers
-    subject: `${name} New Episode Alert!`, // Subject line
-    text: `${name} has ${episodesForEmail} new episodes released on platforms such as animekisa.tv and kissanime.ru` // plain text body
-  });
+    transporter.sendMail(mailOptions, function(error, info) {
+      if (error) {
+        return console.log(error);
+      }
 
-  console.log("Message sent: %s", info.messageId);
+      console.log("Message sent: " + info.response);
+    });
+  }
 }
-sendEmail().catch(console.error);
 
-module.exports = sendEmail;
+module.exports = Email;

@@ -4,8 +4,9 @@ const _ = require("lodash");
 const fs = require("fs");
 const path = require("path");
 const nodemailer = require("nodemailer");
+const Email = require("./email-handling.js");
 
-// const sendEmail = require("./email-handling.js");
+const email = new Email();
 
 const animes = [
   { name: "Dr Stone", url: "https://animekisa.tv/dr-stone" },
@@ -13,6 +14,7 @@ const animes = [
   { name: "My Hero Academia", url: "https://animekisa.tv/boku-no-hero-academia-4" }
 ];
 
+// extracts the html data (episodes) and pushes them into an array
 function extractEpisodes(html) {
   const episodes = [];
   const $ = cheerio.load(html);
@@ -29,7 +31,6 @@ function formatEpisodes(episodes) {
   });
 }
 
-// we return axios as we are
 function getEpisodes(url) {
   return axios
     .get(url)
@@ -52,7 +53,7 @@ function syncEpisodes(name, filePath, url) {
       const missingEpisodes = _.differenceWith(result, parsedDatabase, _.isEqual);
       const episodesForEmail = missingEpisodes.length;
       fs.writeFileSync(filePath, JSON.stringify(result));
-      return console.log(`${episodesForEmail} New Episodes Found for ${name} Sending Email`);
+      return email.sendEmail(episodesForEmail, name);
     }
   });
 }
@@ -69,3 +70,5 @@ function start(animes) {
 }
 
 start(animes);
+
+// return console.log(`${episodesForEmail} New Episodes Found for ${name} Sending Email`);
