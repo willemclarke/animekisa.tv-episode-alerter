@@ -12,10 +12,10 @@ const animes = [
   { name: "Dr Stone", url: "https://animekisa.tv/dr-stone" },
   { name: "Ahiru No Sora", url: "https://animekisa.tv/ahiru-no-sora" },
   { name: "My Hero Academia", url: "https://animekisa.tv/boku-no-hero-academia-4" },
-  { name: "Food Wars Season 4", url: "https://animekisa.tv/shokugeki-no-souma-shin-no-sara" }
+  { name: "Food Wars Season 4", url: "https://animekisa.tv/shokugeki-no-souma-shin-no-sara" },
+  { name: "Diamond No Ace Act 2", url: "https://animekisa.tv/diamond-no-ace-act-ii" }
 ];
 
-// extracts the html data (episodes) and pushes them into an array
 function extractEpisodes(html) {
   const episodes = [];
   const $ = cheerio.load(html);
@@ -25,7 +25,6 @@ function extractEpisodes(html) {
   return episodes;
 }
 
-// takes in an array of episodes --> transforms each element to an int
 function formatEpisodes(episodes) {
   return episodes.reverse().map(episode => {
     return parseInt(episode, 10);
@@ -71,5 +70,3 @@ function start(animes) {
 }
 
 start(animes);
-
-// return console.log(`${episodesForEmail} New Episodes Found for ${name} Sending Email`);
