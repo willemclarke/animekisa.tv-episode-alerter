@@ -3,7 +3,6 @@ const cheerio = require("cheerio");
 const _ = require("lodash");
 const fs = require("fs");
 const path = require("path");
-const nodemailer = require("nodemailer");
 const Email = require("./email-handling.js");
 
 const email = new Email();

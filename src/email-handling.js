@@ -1,4 +1,8 @@
 const nodemailer = require("nodemailer");
+require("dotenv").config();
+
+const emailUser = process.env.EMAIL_USER;
+const emailPass = process.env.EMAIL_PASS;
 
 class Email {
   sendEmail(episodesForEmail, name) {
@@ -8,19 +12,19 @@ class Email {
       pool: true,
       secure: true,
       auth: {
-        user: "testgmail@gmai.com",
-        pass: "testpass"
+        user: `${emailUser}`,
+        pass: `${emailPass}`
       }
     });
 
     const mailOptions = {
-      from: '"Anime Alerter " <testgmail@gmai.com>', // sender address (who sends)
-      to: "testgmail@gmai.com", // list of receivers (who receives)
+      from: `Anime Episode Alerter: ${emailUser}`, // sender address (who sends)
+      to: `${emailUser}`, // list of receivers (who receives)
       subject: `${name} New Episode Alert!`,
-      text: `${name} has ${episodesForEmail} new episodes released on platforms such as animekisa.tv and kissanime.ru` // plaintext body
+      text: `${name} has ${episodesForEmail} new episodes released on anime platforms! E.g: crunchyroll.com/en-gb | animelab.com | animekisa.tv | kissanime.ru` // plaintext body
     };
 
-    transporter.sendMail(mailOptions, function(error, info) {
+    transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         return console.log(error);
       }
